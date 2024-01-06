@@ -26,8 +26,8 @@
                     recipesDiv.innerHTML = '';
                     recipes.forEach(recipe => {
                         const card = document.createElement('div');
-                            card.className = 'card col-md-4 mb-3';
-                            card.innerHTML = `
+                        card.className = 'card col-md-4 mb-3';
+                        card.innerHTML = `
                 <div class="card-body">
                     <h5 class="card-title">${recipe.name}</h5>
                     <p class="card-text">Ingredients: ${recipe.Ingrediants}</p>
@@ -45,15 +45,19 @@
         }
 
         function deleteRecipe(recipeId) {
-    axios.delete(`${MY_SERVER}/recipes/${recipeId}`)
-        .then(function (response) {
-            console.log(response);
-            fetchRecipes(); // Refresh the list
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-}
+            if (recipeId) {
+                axios.delete(`${MY_SERVER}/recipes/${recipeId}`)
+                    .then(function (response) {
+                        console.log(response);
+                        fetchRecipes(); // Refresh the list
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            } else {
+                console.log('Invalid recipeId');
+            }
+        }
 
 
         function editRecipe(recipeId) {

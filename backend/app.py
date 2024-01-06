@@ -36,12 +36,14 @@ def display():
     data = []
     for recepie in recepies:
         recepieData = {
+            "id": recepie.id,
             "Ingrediants" : recepie.Ingrediants,
             "name" : recepie.name,
             "PrepTime" : recepie.PrepTime
         }
         data.append(recepieData)
     return jsonify(data)
+
 @app.route('/add', methods=['POST'])
 def add():
     try:
