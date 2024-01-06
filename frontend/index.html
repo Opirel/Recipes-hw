@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Flask API and Axios Example</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <a href="add.html">add</a>
+    <div class="container mt-4">
+        <h1 class="mb-4">Recipes</h1>
+        <div id="recipes" class="row"></div>
+    </div>
+
+    <script>
+        const MY_SERVER = 'http://localhost:5000';
+
+        function fetchRecipes() {
+            axios.get(`${MY_SERVER}/display`)
+                .then(function (response) {
+                    const recipes = response.data;
+                    console.log(recipes);
+                    const recipesDiv = document.getElementById('recipes');
+                    recipesDiv.innerHTML = '';
+                    recipes.forEach(recipe => {
+                        const card = document.createElement('div');
+                            card.className = 'card col-md-4 mb-3';
+                            card.innerHTML = `
+                <div class="card-body">
+                    <h5 class="card-title">${recipe.name}</h5>
+                    <p class="card-text">Ingredients: ${recipe.Ingrediants}</p>
+                    <button type="button" onclick="deleteRecipe(${recipe.id})" class="btn btn-danger">Delete</button>
+                    <button type="button" onclick="editRecipe(${recipe.id})" class="btn btn-primary">Edit</button>
+                </div>
+                `;
+                        recipesDiv.appendChild(card);
+                    });
+
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+
+        function deleteRecipe(recipeId) {
+    axios.delete(`${MY_SERVER}/recipes/${recipeId}`)
+        .then(function (response) {
+            console.log(response);
+            fetchRecipes(); // Refresh the list
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+
+        function editRecipe(recipeId) {
+            // You will need to implement the logic for editing a recipe.
+            // This could involve displaying a form with the recipe details
+            // and sending a PUT request to your Flask server.
+            console.log('Edit functionality not implemented yet');
+        }
+
+        // Load recipes when the page loads
+        fetchRecipes();
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+</head>
+
+<body>
+
+    <form>
+        <label for="recepie name">recepie name</label>
+        <input id="name" value="piiii" type="text" name="recepie name" required>
+
+        <label for="Ingrediants">Ingrediants</label>
+        <input id="Ingrediants" value="resbarry" type="text" name="Ingrediants" required>
+
+        <label for="Preptime">Preptime</label>
+        <input id="Preptime" value="30" type="text" name="Preptime" required>
+
+        <input type="button" onclick="addrecepie()" value="add recepie">
+    </form> 
+    <script>
+        function addrecepie() {
+
+            axios.post('http://localhost:5000/add', {
+                name: document.getElementById('name').value,
+                ingrediants: document.getElementById('Ingrediants').value,
+                PrepTime: document.getElementById('Preptime').value
+            })
+                .then(response => {
+                    console.log(response.data);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+    </script>
+</body>
+
+</html>
